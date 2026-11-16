@@ -1,0 +1,29 @@
+name: Build and test Java 8 Jamb starter
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  java8:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '8'
+      - name: Confirm Java 8 toolchain
+        run: |
+          java -version
+          javac -version
+      - name: Compile and run scoring + five-player integration tests
+        run: bash scripts/test.sh
+      - name: Upload runnable Java 8 JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: Jamb-Java8-5Dice-Starter-JAR
+          path: dist/Jamb-Multiplayer.jar
+          if-no-files-found: error

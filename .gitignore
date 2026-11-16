@@ -1,0 +1,6 @@
+/build/
+*.class
+*.log
+.DS_Store
+# The runnable JAR is in the distributed ZIP and is rebuilt by GitHub Actions.
+/dist/
